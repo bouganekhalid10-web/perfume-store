@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { LiquidNavbar, NimbusIcons, type LiquidNavItem } from "@/components/ui/liquid-glass-navbar";
+import { HeroVideo } from "@/components/hero-video";
 type IconName = "arrow" | "bag" | "search" | "heart" | "close" | "plus" | "minus" | "menu" | "leaf" | "spark" | "box";
 function Icon({ name, size = 20 }: {
     name: IconName;
@@ -162,7 +163,21 @@ export default function Home() {
       </div>
     </header>
     <main>
-      <section className="hero" aria-labelledby="hero-title"><div className="hero-copy"><p className="eyebrow"><span className="small-line"/>LA BEAUTÉ DE L’INVISIBLE</p><h1 id="hero-title">Plus qu’un parfum.<br />Une <em>empreinte.</em></h1><p className="hero-description">Il y a des parfums que l’on porte.<br />Et ceux qui racontent qui l’on est.<br />Trouvez votre signature, laissez une émotion.</p><a className="button primary" href="#collection" onClick={() => browse()}>Découvrir la collection<Icon name="arrow" size={18}/></a><div className="hero-footnote"><span className="little-flower" aria-hidden="true">✳</span><span>Des notes précieuses.<br /><strong>Une allure qui n’appartient qu’à vous.</strong></span></div></div><div className="hero-visual"><div className="hero-image" role="img" aria-label="Parfum Oud Royal ESSENCE sur une pierre claire, baigné de soleil et accompagné d’une branche d’olivier"/><div className="image-caption"><span>01 / L’ESSENTIEL</span><span>Oud Royal · Eau de parfum</span></div><span className="vertical-caption">UNE ÉMOTION, À FLEUR DE PEAU.</span><button className="hero-product-link" onClick={() => openProduct(products[0])}><span>Rencontrez Oud Royal</span><Icon name="arrow" size={18}/></button></div></section>
+      <section className="hero" aria-labelledby="hero-title">
+        <div className="hero-copy">
+          <p className="eyebrow"><span className="small-line"/>LA BEAUTÉ DE L’INVISIBLE</p>
+          <h1 id="hero-title">Plus qu’un parfum.<br />Une <em>empreinte.</em></h1>
+          <p className="hero-description">Il y a des parfums que l’on porte.<br />Et ceux qui racontent qui l’on est.<br />Trouvez votre signature, laissez une émotion.</p>
+          <a className="button primary" href="#collection" onClick={() => browse()}>Découvrir la collection<Icon name="arrow" size={18}/></a>
+          <div className="hero-footnote"><span className="little-flower" aria-hidden="true">✳</span><span>Des notes précieuses.<br /><strong>Une allure qui n’appartient qu’à vous.</strong></span></div>
+        </div>
+        <div className="hero-visual">
+          <HeroVideo />
+          <div className="image-caption"><span>01 / L’ESSENTIEL</span><span>Le parfum en mouvement</span></div>
+          <span className="vertical-caption">UNE ÉMOTION, À FLEUR DE PEAU.</span>
+          <a className="hero-product-link" href="#collection" onClick={() => browse()}><span>Explorer nos parfums</span><Icon name="arrow" size={18}/></a>
+        </div>
+      </section>
       <div className="values-strip"><div><Icon name="leaf"/><span>Des notes qui ont une âme</span></div><span className="strip-star" aria-hidden="true">✧</span><div><Icon name="spark"/><span>À chaque personnalité, sa signature</span></div><span className="strip-star" aria-hidden="true">✧</span><div><Icon name="box"/><span>Le plaisir d’offrir, ou de s’offrir</span></div></div>
       <section id="collection" className="collection section-shell" aria-labelledby="collection-title">
         <div className="section-heading"><div><p className="eyebrow">LE DÉBUT D’UNE RENCONTRE</p><h2 id="collection-title">Trouvez votre <em>essence.</em></h2></div><p>Quatre univers. Mille façons d’être vous.<br />Laissez vos sens choisir.</p></div>

@@ -1,5 +1,9 @@
 # ESSENCE image assets
 
+## User-supplied hero video
+
+`public/videos/perfume-water.mp4` is the original user-supplied `Glass_perfume_bottle_with_water_563ea231.mp4`, copied without alteration. It is approximately 8 seconds long, 1280 × 720, with H.264 video and AAC audio. The hero always plays it muted and includes a pause/play button. Automatic playback is disabled for reduced-motion preferences and pauses when the hero or browser tab is not visible. The existing hero image acts as a poster and fallback.
+
 Both images were created with the built-in imagegen tool and copied into this project. These are illustrative brand/product visuals, not photographs of inventory.
 
 - `public/images/hero-perfume.png`: editorial still life, amber square ESSENCE Oud Royal bottle, dark olive cap, ivory limestone plinth, olive branch, warm sunlight and botanical shadows on beige plaster. Landscape framing, realistic glass and natural textures, no text outside the bottle.

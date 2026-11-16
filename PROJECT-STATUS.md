@@ -23,6 +23,7 @@ Lire `AGENTS.md` et les guides de la version de Next.js installée avant de modi
 
 - `app/page.tsx` : catalogue et interactions.
 - `app/globals.css` : apparence et adaptation aux écrans.
+- `components/hero-video.tsx` et `public/videos/perfume-water.mp4` : film fourni par l’utilisateur dans la première section, lecture muette, bouton pause et respect de la réduction des animations.
 - `components/ui/liquid-glass-navbar.tsx` : navigation animée Nimbus UI fournie, adaptée à la boutique ; aucune dépendance supplémentaire.
 - `app/layout.tsx` : langue, titre et description.
 - `public/images/` : images intégrées au projet.
