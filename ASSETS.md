@@ -2,7 +2,7 @@
 
 ## User-supplied hero video
 
-`public/videos/perfume-water.mp4` is the original user-supplied `Glass_perfume_bottle_with_water_563ea231.mp4`, copied without alteration. It is approximately 8 seconds long, 1280 × 720, with H.264 video and AAC audio. The hero always plays it muted and includes a pause/play button. Automatic playback is disabled for reduced-motion preferences and pauses when the hero or browser tab is not visible. The existing hero image acts as a poster and fallback.
+`public/videos/perfume-water.mp4` is the original user-supplied `Glass_perfume_bottle_with_water_563ea231.mp4`, copied without alteration. It is approximately 8 seconds long, 1280 × 720, with H.264 video and AAC audio. It appears as a wide rounded banner with centered copy, a large play/pause button and a collection link, matching the supplied layout reference. Playback starts only after clicking Play, remains muted, loops, and pauses while the banner or browser tab is not visible. The browser preloads a video frame for the paused preview; the existing hero image remains a fallback.
 
 Both images were created with the built-in imagegen tool and copied into this project. These are illustrative brand/product visuals, not photographs of inventory.
 

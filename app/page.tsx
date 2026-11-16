@@ -164,19 +164,11 @@ export default function Home() {
     </header>
     <main>
       <section className="hero" aria-labelledby="hero-title">
-        <div className="hero-copy">
-          <p className="eyebrow"><span className="small-line"/>LA BEAUTÉ DE L’INVISIBLE</p>
-          <h1 id="hero-title">Plus qu’un parfum.<br />Une <em>empreinte.</em></h1>
-          <p className="hero-description">Il y a des parfums que l’on porte.<br />Et ceux qui racontent qui l’on est.<br />Trouvez votre signature, laissez une émotion.</p>
-          <a className="button primary" href="#collection" onClick={() => browse()}>Découvrir la collection<Icon name="arrow" size={18}/></a>
-          <div className="hero-footnote"><span className="little-flower" aria-hidden="true">✳</span><span>Des notes précieuses.<br /><strong>Une allure qui n’appartient qu’à vous.</strong></span></div>
-        </div>
-        <div className="hero-visual">
-          <HeroVideo />
-          <div className="image-caption"><span>01 / L’ESSENTIEL</span><span>Le parfum en mouvement</span></div>
-          <span className="vertical-caption">UNE ÉMOTION, À FLEUR DE PEAU.</span>
-          <a className="hero-product-link" href="#collection" onClick={() => browse()}><span>Explorer nos parfums</span><Icon name="arrow" size={18}/></a>
-        </div>
+        <HeroVideo action={<a className="button hero-cta" href="#collection" onClick={() => browse()}>Découvrir la collection<Icon name="arrow" size={17}/></a>}>
+          <p className="eyebrow">L’ART DU PARFUM</p>
+          <h1 id="hero-title">Plus qu’un parfum. <em>Une empreinte.</em></h1>
+          <p className="hero-description">Trouvez votre signature, laissez une émotion.</p>
+        </HeroVideo>
       </section>
       <div className="values-strip"><div><Icon name="leaf"/><span>Des notes qui ont une âme</span></div><span className="strip-star" aria-hidden="true">✧</span><div><Icon name="spark"/><span>À chaque personnalité, sa signature</span></div><span className="strip-star" aria-hidden="true">✧</span><div><Icon name="box"/><span>Le plaisir d’offrir, ou de s’offrir</span></div></div>
       <section id="collection" className="collection section-shell" aria-labelledby="collection-title">
