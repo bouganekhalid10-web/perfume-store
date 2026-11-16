@@ -102,23 +102,86 @@ svg {
 }
 
 .announcement {
-  height:34px;
+  position:relative;
+  height:36px;
   background:var(--olive);
   color:#f3f2e9;
-  padding:0 5%;
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  overflow:hidden;
+  font-family:Tahoma,Arial,sans-serif;
+  font-size:13px;
+  line-height:1.7
+}
+
+.announcement-viewport {
+  flex:1;
+  min-width:0;
+  overflow:hidden
+}
+
+.announcement-track {
+  display:flex;
+  width:max-content;
+  direction:ltr;
+  will-change:transform;
+  animation:announcement-scroll 40s linear infinite
+}
+
+.announcement-group {
+  display:flex;
+  flex-shrink:0;
+  align-items:center;
+  justify-content:space-around;
+  min-width:100vw;
+  gap:64px;
+  padding-inline:32px
+}
+
+.announcement-item {
+  display:flex;
+  flex-shrink:0;
+  align-items:center;
+  gap:64px
+}
+
+.announcement-message {
+  white-space:nowrap;
+  font-weight:500
+}
+
+.announcement-divider {
   font-size:10px;
-  letter-spacing:.05em
+  color:#d7dfc7
 }
 
-.announcement>span {
-  font-size:10px
+.announcement[data-paused="true"] .announcement-track {
+  animation-play-state:paused
 }
 
-.announcement>span span {
-  padding-left:15px
+.announcement-toggle {
+  display:grid;
+  place-items:center;
+  flex-shrink:0;
+  align-self:stretch;
+  width:36px;
+  border-inline-start:1px solid #ffffff25;
+  color:inherit;
+  background:var(--olive)
+}
+
+.announcement-toggle:hover {
+  background:#3b4530
+}
+
+.announcement-toggle:focus-visible {
+  outline:2px solid #fff;
+  outline-offset:-5px
+}
+
+@keyframes announcement-scroll {
+  from { transform:translateX(0) }
+  to { transform:translateX(-50%) }
 }
 
 .site-header {
@@ -1400,16 +1463,6 @@ h2 {
 }
 
 @media(max-width:760px) {
-  .announcement {
-    justify-content:center;
-    font-size:9px;
-    height:30px
-  }
-
-  .announcement>span {
-    display:none
-  }
-
   .site-header {
     padding:19px 6% 17px;
     gap:19px 12px;
@@ -1906,6 +1959,42 @@ h2 {
 }
 
 @media(prefers-reduced-motion:reduce) {
+  .announcement {
+    height:auto;
+    min-height:36px;
+    padding:8px 16px
+  }
+
+  .announcement-track {
+    display:block;
+    width:100%;
+    transform:none;
+    will-change:auto
+  }
+
+  .announcement-group {
+    display:block;
+    min-width:0;
+    padding:0
+  }
+
+  .announcement-item {
+    display:block
+  }
+
+  .announcement-group + .announcement-group,
+  .announcement-item + .announcement-item,
+  .announcement-divider,
+  .announcement-toggle {
+    display:none
+  }
+
+  .announcement-message {
+    display:block;
+    white-space:normal;
+    text-align:center
+  }
+
   html {
     scroll-behavior:auto
   }

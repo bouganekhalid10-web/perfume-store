@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { LiquidNavbar, NimbusIcons, type LiquidNavItem } from "@/components/ui/liquid-glass-navbar";
 import { HeroVideo } from "@/components/hero-video";
+import { AnnouncementBar } from "@/components/announcement-bar";
 type IconName = "arrow" | "bag" | "search" | "heart" | "close" | "plus" | "minus" | "menu" | "leaf" | "spark" | "box";
 function Icon({ name, size = 20 }: {
     name: IconName;
@@ -140,7 +141,7 @@ export default function Home() {
     const searchResults = products.filter((product) => `${product.name} ${product.notes} ${product.family} ${product.category}`.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().includes(query.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim()));
     return <>
     <a href="#collection" className="skip-link">Aller à la collection</a>
-    <div className="announcement">L’art du parfum. L’émotion d’une signature.<span>Une invitation à se découvrir <span aria-hidden="true">↗</span></span></div>
+    <AnnouncementBar />
     <header className="site-header">
       <a className="wordmark" href="#" aria-label="ESSENCE, accueil" onClick={() => browse()}><span className="brand-name" translate="no">ESSENCE</span><span>LA PARFUMERIE SINGULIÈRE</span></a>
       <LiquidNavbar
