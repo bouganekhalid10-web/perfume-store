@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { LiquidNavbar, NimbusIcons, type LiquidNavItem } from "@/components/ui/liquid-glass-navbar";
 type IconName = "arrow" | "bag" | "search" | "heart" | "close" | "plus" | "minus" | "menu" | "leaf" | "spark" | "box";
 function Icon({ name, size = 20 }: {
     name: IconName;
@@ -20,6 +21,12 @@ function Icon({ name, size = 20 }: {
     };
     return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[name]}</svg>;
 }
+const navigationItems: LiquidNavItem[] = [
+    { label: "Nos parfums", href: "#collection", icon: NimbusIcons.drop, fx: "drop" },
+    { label: "Pour elle", href: "#collection", icon: <Icon name="spark" size={18}/>, fx: "pop" },
+    { label: "Pour lui", href: "#collection", icon: <Icon name="leaf" size={18}/>, fx: "wave" },
+    { label: "La maison", href: "#maison", icon: NimbusIcons.home, fx: "glow" },
+];
 const products = [
     { id: "oud", name: "Oud Royal", family: "Boisé", category: "Mixte", notes: "Oud · Safran · Bois de santal", price: 850, color: "sand", badge: "LA SIGNATURE", description: "Un voyage au cœur des bois précieux. Le safran ouvre la danse, avant de laisser place à un oud enveloppant et à la douceur du santal.", top: "Safran", middle: "Oud", base: "Bois de santal" },
     { id: "rose", name: "Rose Élégance", family: "Floral", category: "Femme", notes: "Rose · Pivoine · Musc blanc", price: 620, color: "rose", badge: "DÉLICAT & LUMINEUX", description: "La fraîcheur d’un bouquet à peine cueilli. Une rose délicate rencontre la pivoine et se prolonge dans un nuage de musc blanc.", top: "Pivoine", middle: "Rose", base: "Musc blanc" },
@@ -51,7 +58,7 @@ export default function Home() {
     const [panel, setPanel] = useState<Panel>(null);
     const [selected, setSelected] = useState<Product>(products[0]);
     const [size, setSize] = useState(100);
-    const [menuOpen, setMenuOpen] = useState(false);
+    const [activeNav, setActiveNav] = useState(0);
     const [toast, setToast] = useState("");
     const dialogRef = useRef<HTMLDialogElement>(null);
     const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -108,7 +115,12 @@ export default function Home() {
         notify(`${product.name} ajouté à votre panier`);
     }
     function toggleFavorite(id: string) { setFavorites((previous) => previous.includes(id) ? previous.filter((item) => item !== id) : [...previous, id]); }
-    function browse(nextCategory = "Tous", nextFamily: string | null = null) { setCategory(nextCategory); setFamily(nextFamily); setOnlyFavorites(false); setMenuOpen(false); }
+    function browse(nextCategory = "Tous", nextFamily: string | null = null) {
+        setCategory(nextCategory);
+        setFamily(nextFamily);
+        setOnlyFavorites(false);
+        setActiveNav(nextCategory === "Femme" ? 1 : nextCategory === "Homme" ? 2 : 0);
+    }
     function openProduct(product: Product) { setSelected(product); setSize(100); setPanel("product"); }
     function updateQuantity(index: number, delta: number) { setCart((previous) => previous.map((item, i) => i === index ? { ...item, quantity: Math.min(20, item.quantity + delta) } : item).filter((item) => item.quantity > 0)); }
     function downloadSelection() {
@@ -129,22 +141,32 @@ export default function Home() {
     <a href="#collection" className="skip-link">Aller à la collection</a>
     <div className="announcement">L’art du parfum. L’émotion d’une signature.<span>Une invitation à se découvrir <span aria-hidden="true">↗</span></span></div>
     <header className="site-header">
-      <a className="wordmark" href="#" aria-label="ESSENCE, accueil">ESSENCE<span>LA PARFUMERIE SINGULIÈRE</span></a>
-      <nav className="desktop-nav" aria-label="Navigation principale"><a href="#collection" onClick={() => browse()}>Nos parfums</a><a href="#collection" onClick={() => browse("Femme")}>Pour elle</a><a href="#collection" onClick={() => browse("Homme")}>Pour lui</a><a href="#maison">La maison</a></nav>
+      <a className="wordmark" href="#" aria-label="ESSENCE, accueil" onClick={() => browse()}><span className="brand-name" translate="no">ESSENCE</span><span>LA PARFUMERIE SINGULIÈRE</span></a>
+      <LiquidNavbar
+        className="perfume-nav"
+        ariaLabel="Navigation principale"
+        items={navigationItems}
+        active={activeNav}
+        compact={false}
+        sound={false}
+        tone="light"
+        onChange={(index) => {
+            if (index === 3) setActiveNav(3);
+            else browse(index === 1 ? "Femme" : index === 2 ? "Homme" : "Tous");
+        }}
+      />
       <div className="header-actions">
         <button className="icon-button" aria-label="Rechercher un parfum" onClick={() => { setQuery(""); setPanel("search"); }}><Icon name="search"/></button>
-        <button className={`icon-button favorites-button ${onlyFavorites ? "is-favorite" : ""}`} aria-label={`Voir mes favoris (${favorites.length})`} onClick={() => { setOnlyFavorites(!onlyFavorites); setCategory("Tous"); setFamily(null); document.getElementById("collection")?.scrollIntoView({ behavior: "smooth" }); }}><Icon name="heart"/></button>
+        <button className={`icon-button favorites-button ${onlyFavorites ? "is-favorite" : ""}`} aria-label={`Voir mes favoris (${favorites.length})`} onClick={() => { setOnlyFavorites(!onlyFavorites); setCategory("Tous"); setFamily(null); setActiveNav(0); document.getElementById("collection")?.scrollIntoView({ behavior: "smooth" }); }}><Icon name="heart"/></button>
         <button className="icon-button cart-button" aria-label={`Ouvrir mon panier, ${count} articles`} onClick={() => setPanel("cart")}><Icon name="bag"/><span className="cart-count">{count}</span></button>
-        <button className="icon-button mobile-menu-button" aria-label="Menu" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}><Icon name={menuOpen ? "close" : "menu"}/></button>
       </div>
     </header>
-    {menuOpen && <nav className="mobile-nav" aria-label="Navigation mobile"><a href="#collection" onClick={() => browse()}>Nos parfums</a><a href="#collection" onClick={() => browse("Femme")}>Pour elle</a><a href="#collection" onClick={() => browse("Homme")}>Pour lui</a><a href="#maison" onClick={() => setMenuOpen(false)}>La maison</a></nav>}
     <main>
       <section className="hero" aria-labelledby="hero-title"><div className="hero-copy"><p className="eyebrow"><span className="small-line"/>LA BEAUTÉ DE L’INVISIBLE</p><h1 id="hero-title">Plus qu’un parfum.<br />Une <em>empreinte.</em></h1><p className="hero-description">Il y a des parfums que l’on porte.<br />Et ceux qui racontent qui l’on est.<br />Trouvez votre signature, laissez une émotion.</p><a className="button primary" href="#collection" onClick={() => browse()}>Découvrir la collection<Icon name="arrow" size={18}/></a><div className="hero-footnote"><span className="little-flower" aria-hidden="true">✳</span><span>Des notes précieuses.<br /><strong>Une allure qui n’appartient qu’à vous.</strong></span></div></div><div className="hero-visual"><div className="hero-image" role="img" aria-label="Parfum Oud Royal ESSENCE sur une pierre claire, baigné de soleil et accompagné d’une branche d’olivier"/><div className="image-caption"><span>01 / L’ESSENTIEL</span><span>Oud Royal · Eau de parfum</span></div><span className="vertical-caption">UNE ÉMOTION, À FLEUR DE PEAU.</span><button className="hero-product-link" onClick={() => openProduct(products[0])}><span>Rencontrez Oud Royal</span><Icon name="arrow" size={18}/></button></div></section>
       <div className="values-strip"><div><Icon name="leaf"/><span>Des notes qui ont une âme</span></div><span className="strip-star" aria-hidden="true">✧</span><div><Icon name="spark"/><span>À chaque personnalité, sa signature</span></div><span className="strip-star" aria-hidden="true">✧</span><div><Icon name="box"/><span>Le plaisir d’offrir, ou de s’offrir</span></div></div>
       <section id="collection" className="collection section-shell" aria-labelledby="collection-title">
         <div className="section-heading"><div><p className="eyebrow">LE DÉBUT D’UNE RENCONTRE</p><h2 id="collection-title">Trouvez votre <em>essence.</em></h2></div><p>Quatre univers. Mille façons d’être vous.<br />Laissez vos sens choisir.</p></div>
-        <div className="collection-toolbar"><div className="tabs" role="group" aria-label="Filtrer les parfums">{["Tous", "Femme", "Homme", "Mixte"].map((item) => <button key={item} aria-pressed={category === item && !onlyFavorites} className={category === item && !onlyFavorites ? "active" : ""} onClick={() => { setCategory(item); setOnlyFavorites(false); setFamily(null); }}>{item === "Tous" ? "Tous les parfums" : item === "Femme" ? "Pour elle" : item === "Homme" ? "Pour lui" : "Les mixtes"}</button>)}</div><span className="result-count">{visibleProducts.length} parfum{visibleProducts.length !== 1 ? "s" : ""}</span></div>
+        <div className="collection-toolbar"><div className="tabs" role="group" aria-label="Filtrer les parfums">{["Tous", "Femme", "Homme", "Mixte"].map((item) => <button key={item} aria-pressed={category === item && !onlyFavorites} className={category === item && !onlyFavorites ? "active" : ""} onClick={() => browse(item)}>{item === "Tous" ? "Tous les parfums" : item === "Femme" ? "Pour elle" : item === "Homme" ? "Pour lui" : "Les mixtes"}</button>)}</div><span className="result-count">{visibleProducts.length} parfum{visibleProducts.length !== 1 ? "s" : ""}</span></div>
         {(onlyFavorites || family) && <div className="active-filter">{onlyFavorites ? "Mes favoris" : `Notes ${family === "Boisé" ? "boisées" : family === "Floral" ? "florales" : "ambrées"}`}<button onClick={() => { setOnlyFavorites(false); setFamily(null); }} aria-label="Effacer le filtre"><Icon name="close" size={14}/></button></div>}
         <div className="product-grid">{visibleProducts.map((product) => <article className="product-card" key={product.id}><div className="product-image-wrap"><button className="product-photo-button" onClick={() => openProduct(product)} aria-label={`Découvrir ${product.name}`}><ProductPhoto product={product}/></button><span className="product-badge">{product.badge}</span><button className={`favorite-toggle ${favorites.includes(product.id) ? "is-favorite" : ""}`} aria-pressed={favorites.includes(product.id)} aria-label={`${favorites.includes(product.id) ? "Retirer" : "Ajouter"} ${product.name} ${favorites.includes(product.id) ? "des" : "aux"} favoris`} onClick={() => toggleFavorite(product.id)}><Icon name="heart" size={18}/></button><button className="quick-add" onClick={() => addToCart(product)}>Ajouter au panier<Icon name="plus" size={17}/></button></div><div className="product-type">EAU DE PARFUM<span>100 ML</span></div><div className="product-title-row"><button onClick={() => openProduct(product)}><h3>{product.name}</h3></button><span>{money(product.price)}</span></div><p className="product-notes">{product.notes}</p></article>)}</div>
         {visibleProducts.length === 0 && <div className="empty-state"><Icon name="heart" size={32}/><h3>Votre prochaine rencontre vous attend.</h3><p>Ajoutez un parfum à vos favoris pour le retrouver ici.</p><button className="text-link" onClick={() => { setOnlyFavorites(false); setFamily(null); setCategory("Tous"); }}>Explorer les parfums<Icon name="arrow" size={17}/></button></div>}

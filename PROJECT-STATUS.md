@@ -4,7 +4,7 @@
 
 Interface de boutique de parfums en français, en crème et vert olive. Le catalogue, les prix et les images sont illustratifs.
 
-Fonctionnalités réalisées : filtres par catégorie et famille olfactive, recherche, fiches produits avec formats 50/100 ml, favoris, panier local, gestion des quantités, téléchargement de la sélection, FAQ et menu mobile.
+Fonctionnalités réalisées : filtres par catégorie et famille olfactive, recherche, fiches produits avec formats 50/100 ml, favoris, panier local, gestion des quantités, téléchargement de la sélection, FAQ et navigation Liquid Glass adaptée au mobile.
 
 Le dernier `npm run build` a réussi. La page a été ouverte et inspectée dans Chrome. Les parcours interactifs n’ont pas tous été vérifiés automatiquement.
 
@@ -23,6 +23,7 @@ Lire `AGENTS.md` et les guides de la version de Next.js installée avant de modi
 
 - `app/page.tsx` : catalogue et interactions.
 - `app/globals.css` : apparence et adaptation aux écrans.
+- `components/ui/liquid-glass-navbar.tsx` : navigation animée Nimbus UI fournie, adaptée à la boutique ; aucune dépendance supplémentaire.
 - `app/layout.tsx` : langue, titre et description.
 - `public/images/` : images intégrées au projet.
 - `ASSETS.md` : provenance et prompts des visuels.
